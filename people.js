@@ -8,7 +8,21 @@ module.exports = function(){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.workouts  = results;
+            context.workouts = results;
+            
+            for (var i = 0 ; i < results.length; i++){
+                if (results[i].lbs === 0){
+                    results[i].lbs = "Kilograms";
+                } else if (results[i].lbs === 1){
+                    results[i].lbs = "Pounds";
+                }
+            }
+
+            // console.log("Output test:");
+            // console.log(results);
+            // results[1].lbs = "blah";
+            // console.log(results[0].lbs);
+            // console.log(results[1].lbs);
             complete();
         });
     }
