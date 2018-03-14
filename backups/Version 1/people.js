@@ -60,24 +60,6 @@ module.exports = function(){
         });
     }
 
-
-
-    //both functions below are for the purpose of updating the table
-    function getWork(res, mysql, context, id, complete){
-        var sql = "SELECT id, name, reps, weight, date, lbs FROM workouts WHERE id = ?";
-        var inserts = [id];
-        mysql.pool.query(sql, inserts, function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.workouts = results[0];
-            results[0].date = (JSON.stringify(results[0].date)).substring(1,11);
-            console.log(results[0].date);
-            complete();
-        });
-    }
-
     function getPerson(res, mysql, context, id, complete){
         var sql = "SELECT id, fname, lname, homeworld, age FROM bsg_people WHERE id = ?";
         var inserts = [id];
@@ -135,37 +117,18 @@ module.exports = function(){
     router.get('/:id', function(req, res){
         callbackCount = 0;
         var context = {};
-        context.jsscripts = ["selectedUnits.js", "updateperson.js"];
+        context.jsscripts = ["selectedplanet.js", "updateperson.js"];
         var mysql = req.app.get('mysql');
         getPerson(res, mysql, context, req.params.id, complete);
         getPlanets(res, mysql, context, complete);
-        getWork(res, mysql, context, req.params.id, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 3){
+            if(callbackCount >= 2){
                 res.render('update-person', context);
             }
 
         }
     });
-
-
-
-    // router.get('/:id', function(req, res){
-    //     callbackCount = 0;
-    //     var context = {};
-    //     context.jsscripts = ["selectedplanet.js", "updateperson.js"];
-    //     var mysql = req.app.get('mysql');
-    //     getPerson(res, mysql, context, req.params.id, complete);
-    //     getPlanets(res, mysql, context, complete);
-    //     function complete(){
-    //         callbackCount++;
-    //         if(callbackCount >= 2){
-    //             res.render('update-person', context);
-    //         }
-
-    //     }
-    // });
 
     /* Adds a person, redirects to the people page after adding */
 
