@@ -1,0 +1,40 @@
+<h1>My Workout Tracker:</h1>
+<h1>By Uday Trivedi</h1>
+{{#each foo}}
+{{this}}
+{{/each}}
+<table>
+    <thead> 
+        <th>Name</th> 
+        <th>Reps</th> 
+        <th>Weight</th>
+        <th>Date</th>
+        <th>Unit</th>   
+    </thead> 
+    <tbody> 
+        {{#each workouts}} 
+        <tr> 
+            <td>{{name}}</td> 
+            <td>{{reps}}</td> 
+            <td>{{weight}}</td> 
+            <td>{{date}}</td>
+            <td>{{lbs}}</td>
+               
+            <td><button onclick="deletePerson({{id}})">Delete</button></td>
+            <td><a href="/people/{{id}}">Update</a></td>
+        </tr> 
+        {{/each}} 
+    </tbody> 
+    <form id="addperson" action="/people" method="post">
+    Name: <input type="text" name="name"><br>
+    Reps: <input type ="number" name = "reps"><br>
+    Weight: <input type="number" name="weight"><br>
+    Date: <input type="date" name="date"><br>
+    Unit:   <select name="lbs">
+                <option value="0">Kilograms</option>
+                <option value="1">Pounds</option>
+
+            </select>
+    <input type="submit" value="Submit">
+    </form>
+</table> 
