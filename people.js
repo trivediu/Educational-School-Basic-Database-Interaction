@@ -187,8 +187,8 @@ module.exports = function(){
 
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "UPDATE bsg_people SET fname=?, lname=?, homeworld=?, age=? WHERE id=?";
-        var inserts = [req.body.fname, req.body.lname, req.body.homeworld, req.body.age, req.params.id];
+        var sql = "UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=?";
+        var inserts = [req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.lbs, req.params.id];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
@@ -199,6 +199,23 @@ module.exports = function(){
             }
         });
     });
+
+
+    // router.put('/:id', function(req, res){
+    //     var mysql = req.app.get('mysql');
+    //     var sql = "UPDATE bsg_people SET fname=?, lname=?, homeworld=?, age=? WHERE id=?";
+    //     var inserts = [req.body.fname, req.body.lname, req.body.homeworld, req.body.age, req.params.id];
+    //     sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+    //         if(error){
+    //             res.write(JSON.stringify(error));
+    //             res.end();
+    //         }else{
+    //             res.status(200);
+    //             res.end();
+    //         }
+    //     });
+    // });
+
 
     /* Route to delete a person, simply returns a 202 upon success. Ajax will handle this. */
 
